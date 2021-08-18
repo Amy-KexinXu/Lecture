@@ -1,0 +1,543 @@
+---
+title: "ETC5523: Communicating with Data"
+subtitle: "Data Storytelling on the Web"
+author: "Emi Tanaka"
+email: "ETC5523.Clayton-x@monash.edu"
+date: "Week 4"
+length: "50 minutes"
+department: "Department of Econometrics and Business Statistics"
+titlebgimg: "images/bg-04.png"
+output:
+  xaringan::moon_reader:
+    css:
+      - ninjutsu
+      - "assets/font-awesome-all.css"
+      - "assets/tachyons-addon.css"
+      - "assets/animate.css"
+      - "assets/fira-code.css"
+      - "assets/boxes.css"
+      - "assets/table.css"
+      - "assets/styles.css"
+      - "assets/monash-brand.css"
+      - "assets/monash-fonts.css"
+      - "assets/slide-types.css"
+      - "assets/lists.css"
+      - "assets/custom.css"
+    self_contained: false 
+    seal: false 
+    chakra: 'lib/remark-latest.min.js'
+    lib_dir: lib
+    includes:
+      in_header: "assets/head.html"
+    mathjax: "lib/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      highlightStyle: magula
+      highlightLanguage: r 
+      highlightLines: true
+      highlightSpans: false 
+      countIncrementalSlides: false
+      slideNumberFormat: '%current%/%total%'
+      navigation:
+        scroll: false 
+        touch: true
+        click: false
+      ratio: '16:9'
+---
+
+```{r, include = FALSE}
+current_file <- knitr::current_input()
+basename <- gsub(".Rmd$", "", current_file)
+
+knitr::opts_chunk$set(
+  fig.path = sprintf("images/%s/", basename),
+  fig.width = 6,
+  fig.height = 4,
+  fig.align = "center",
+  fig.retina = 3,
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  cache = FALSE,
+  cache.path = "cache/"
+)
+```
+
+```{r titleslide, child="assets/titleslide.Rmd"}
+```
+
+---
+
+# <span class="fa-layers fa-fw orange"><i class="fas fa-file"></i><span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11 down-3" style="font-weight:900;color:#e3e3e3;">Rmd</span></span> R Markdown
+
+.flex[
+.w-50[
+
+`lecture-04suppA.Rmd`
+.scroll-sign[
+.overflow-scroll.vh-50.f4[
+````yaml
+```{r, results="asis", echo = FALSE}
+rmdeg <- readLines("lecture-04suppA.Rmd")
+line_yaml_start <- which(rmdeg=="---")[1]
+line_yaml_end <- which(rmdeg=="---")[2]
+cat(rmdeg[line_yaml_start:line_yaml_end], sep = "\n")
+```
+````
+````r
+```{r, results="asis", echo = FALSE}
+cat(rmdeg[(line_yaml_end + 1):length(rmdeg)], sep = "\n")
+```
+````
+]]]
+.w-50[
+`lecture-04suppA.html`
+
+<iframe src="lecture-04suppA.html" height="100%" width="100%"></iframe>
+
+
+]]
+
+---
+
+# <span class="fa-layers fa-fw green"><i class="fas fa-file"></i><span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11 down-3" style="font-weight:900;color:#e3e3e3;">html</span></span> Sharing your HTML webpage
+
+* You can share your HTML webpage using [RPubs](https://rpubs.com/). .f5.animated.flash[LIVE DEMO]
+
+.center[
+<a href="https://rpubs.com/emitanaka/hello-world-etc5523"><img class = "img-shadow" src="images/lecture-04/rpubs-example.png" height = "250px"></a>
+]
+.w-60[
+
+{{content}}
+]
+--
+
+
+* There are a few caveats sharing via RPubs though:
+  * The HTML webpage needs to be self-contained (so no external local file dependencies like css and js).
+  * There is a banner on the top and the bottom.
+  * The url has to be under the domain `https://rpubs.com`.
+  
+---
+
+# <span class="fa-layers fa-fw green"><i class="fas fa-globe"></i><span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11 down-3" style="font-weight:900;color:#e3e3e3;">html</span></span> R Markdown Website Example
+
+* The [ETC5523 course website](https://cwd.numbat.space/) is built using a "simple" R Markdown website. 
+
+<center>
+<a href="https://cwd.numbat.space/"><img src="images/lecture-04/course-webpage.png" height = "250px" style="box-shadow: 12px 12px 29px #555;"></a>
+</center>
+
+--
+
+<Br>
+
+* How is this different to a normal HTML output via `rmarkdown::html_document`?
+--
+
+* What is the difference between a **_website_** and a **_webpage_**? 
+
+
+---
+
+# <i class="fas fa-file-alt green"></i> Webpage vs Website  <i class="fas fa-book green"></i> 
+
+
+
+## <i class="fas fa-file-alt"></i> Webpage 
+
+* A _single_ document written in HTML.
+--
+
+<Br><Br>
+
+## <i class="fas fa-book"></i> Website
+
+* A collection of webpages.
+--
+
+* The webpages usually share a common **_navigation_** bar (or tab), and possibly a common **_footer_**.
+--
+
+* There are hyperlinks to other webpages that are nested under the same
+  - domain, e.g. https://numbat.space/, or 
+  - subdomain, e.g. https://cwd.numbat.space/.
+
+---
+
+class: transition middle
+
+
+# R Markdown Website
+
+
+---
+
+class: transition middle
+
+
+# Download 
+# <a href="lecture-04-rmarkdown-website.zip" download style="color:orange"><i class="fas fa-file-archive"></i></a>
+
+.flex[
+.w-20[
+]
+.w-60[
+If you know this lecture content already, download this file and study the plots in Rmd documents instead.
+]
+]
+
+
+
+
+---
+
+# <span class="fa-layers fa-fw green"><i class="fas fa-globe"></i><span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11 down-3" style="font-weight:900;color:#e3e3e3;">html</span></span> Making an R Markdown Website .f4[Part 1/3]
+
+.grid[
+.item.br[
+The minimum setup you need is a directory that contains:
+
+```
+├── index.Rmd
+└── _site.yml
+```
+
+where `_site.yml` contains
+
+```yaml
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+```
+]
+.item.pl3[
+
+{{content}}
+
+]
+
+]
+
+--
+
+You can build the website then by:
+
+* `rmarkdown::render_site()`
+* Or go to RStudio IDE and look under the Build tab:
+
+<center>
+<img src="https://bookdown.org/yihui/rmarkdown/images/site-build.png" width = "500px">
+</center>
+
+
+---
+
+# <span class="fa-layers fa-fw green"><i class="fas fa-globe"></i><span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11 down-3" style="font-weight:900;color:#e3e3e3;">html</span></span> Making an R Markdown Website .f4[Part 2/3]
+
+.grid[
+.item.br[
+By default the output is in `_site` folder:
+
+```
+├── index.Rmd
+├── _site.yml
+└── _site
+    ├── index.html
+    └── site_libs
+```
+
+You modify the output directory in the `_site.yml`
+
+
+```yaml
+*output_dir: "docs"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+```
+]
+.item.pl3[
+{{content}}
+]
+]
+
+--
+
+You can add more webpages:
+
+```
+├── index.Rmd
+*├── post2.Rmd
+├── _site.yml
+└── _site
+    ├── index.html
+*   ├── post2.html
+    └── site_libs
+```
+
+```yaml
+output_dir: "docs"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+*   - text: "Post"
+*     href: post2.html
+```
+
+---
+
+# <span class="fa-layers fa-fw green"><i class="fas fa-globe"></i><span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11 down-3" style="font-weight:900;color:#e3e3e3;">html</span></span> Making an R Markdown Website .f4[Part 3/3]
+
+.grid[
+.item.br[
+
+You can include common elements 
+
+
+`_site.yml`
+
+```yaml
+output_dir: "docs"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Post"
+      href: post2.html
+*output:
+*  html_document:
+*    theme: cosmo
+*    include:
+*      after_body: footer.html
+*    css: styles.css
+```
+
+]
+.item.pl3[
+{{content}}
+]
+
+]
+
+--
+
+Or have own `output` options which get merged with common options:
+
+`post2.Rmd`
+```yaml
+---
+output:
+  html_document:
+    theme: darkly
+---
+
+..content..
+```
+
+{{content}}
+
+--
+
+<br><br>
+<center>
+<span class="animated flash">LIVE DEMO</span>
+</center>
+
+
+---
+
+class: transition middle
+
+# For more information see <br><a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html" style="color:orange;">R Markdown: The Definitive Guide</a>
+
+---
+
+# <i class="fab fa-github black"></i> Sharing on the web with GitHub Pages
+
+
+
+.grid[
+.item.br[
+
+1. If your GitHub username is called `username` then make a GitHub repo called `username.github.io`.
+2. Or if you already have a `username.github.io`, then make a GitHub repo called say `myweb`.
+* Push your directory to your Github repo.
+* Go to your GitHub repo settings and enable "GitHub Pages". 
+* Your website will be available with url:
+  1. http://username.github.io/ or
+  2. http://username.github.io/myweb
+  
+.f4[Note: it may take 10 minutes or so to render the first time.]
+
+]
+.item.pl3[
+* Directory structure to push to your GitHub repo:
+
+Version 1
+```
+*├── index.html
+├── ...
+└── ...
+```
+
+Version 2
+```
+├── ...
+└── docs
+*   ├── index.html
+    └── ...
+```
+
+{{content}}
+
+]
+]
+
+--
+
+
+<br>
+<center>
+<span class="animated flash">LIVE DEMO</span>
+</center>
+
+---
+
+# <i class="fas fa-square-full" style="color:#00AD9F; transform: rotate(45deg);font-size:28pt;"></i> Sharing on the web with Netlify
+
+* Go to https://app.netlify.com and log in
+* Drag and drop your folder which contains the `index.html` to:
+
+<center>
+<img src="images/lecture-04/netlify-dropoff.png" width = "800px">
+</center>
+
+* Do go to `Site settings > Change site name` for a more sensible domain name. 
+
+
+
+<br>
+<center>
+<span class="animated flash">LIVE DEMO</span>
+</center>
+
+---
+
+
+class: middle
+
+# 🔨 Exercise
+
+* Unzip <a href="lecture-04-rmarkdown-website.zip" download style="color:orange"><i class="fas fa-file-archive"></i></a> and rename `_post2.Rmd` to `post2.Rmd`
+* Include `post2.Rmd` on the website. 
+* Try including `_post1.Rmd`. Anything you notice?
+* Get your website on a public domain.
+
+<br>
+
+*Please help each other.*
+
+`r countdown::countdown(20, class = "clock")`
+
+---
+
+class: transition 
+
+# .monash-white[`distill` 📦]
+
+---
+
+# 💧 Distill journal
+
+.grid[
+.item[
+* [Distill](https://distill.pub/) is a scientific journal on machine learning established in March 2017.
+* Traditional scientific articles are focused on a _PDF_ article.
+* But Distill is _HTML based_ so you can incorporate interactive visualisations.
+
+{{content}}
+
+]
+.item[
+<center>
+<img src="images/lecture-04/distill-demo.gif" width = "430px">
+</center>
+
+.f5[Source: https://distill.pub/2019/visual-exploration-gaussian-processes/]
+]
+]
+
+--
+
+* 🎉 The [**R Journal**](https://journal.r-project.org/) is now using the Distill framework! <i class="fas fa-newspaper"></i> See [here](https://journal.r-project.org/dev/articles/RJ-2021-050/) for the first article that uses animation and interactive graphs in the R Journal. 
+
+---
+
+# <i class="fas fa-newspaper gray"></i> `distill` with R Markdown
+
+* `distill` R-package (originally called `radix`) creates a HTML output that looks like Distill 
+* You can get started at `RStudio > New Project > New Directory > Distill Website` (or `Distill Blog`)
+
+<center>
+<img src="images/lecture-04/create-website-projects.png" width="50%">
+</center>
+
+
+---
+
+# 📰 `distill::distill_article` .f4.animated.flash[LIVE DEMO] <a href="lecture-04-suppB.Rmd" download style="color:orange"><i class="fas fa-file-alt font_small"></i></a>
+
+<br>
+.blockquote[
+* Reader-friendly typography that adapts well to mobile devices.
+* Features essential to technical writing like LaTeX math, citations, and footnotes.
+* Flexible figure layout options (e.g. displaying figures at a larger width than the article text).
+* Attractively rendered tables with optional support for pagination.
+
+<footer>—Allaire, et al. (2018, Sept. 10). Distill for R Markdown. Retrieved from https://rstudio.github.io/distill</footer>
+]
+
+---
+
+class: middle
+
+.f2[So why use the Distill framework?]
+
+--
+
+* It has features that make "listings" of the webpages easier
+--
+
+* The blog posts are not automatically re-rendered when site is re-built
+--
+
+* Generates RSS feeds for your blog posts
+--
+
+* And more...  .animated.flash.f5[LIVE DEMO]
+
+
+---
+
+
+class: nostripheader middle
+
+# 📚 Resources
+
+* [Distill for R Markdown: Creating a Website](https://rstudio.github.io/distill/website.html)
+* [Building a blog with distill by Thomas Mock](https://themockup.blog/posts/2020-08-01-building-a-blog-with-distill/)
+* [Teaching in Production by Alison Hill](https://rstudio-education.github.io/teaching-in-production/slides/#57)
+
+
+---
+
+```{r endslide, child="assets/endslide.Rmd"}
+```
